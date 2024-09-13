@@ -24,7 +24,8 @@ class LinkedList {
     this.head = null;
   }
 
-  // append(value) adds a new node containing value to the end of the list
+  // append(value) adds a new node containing value to the
+  // end of the list
 
   append(value) {
     const newNode = new Node(value);
@@ -40,7 +41,8 @@ class LinkedList {
     }
   }
 
-  // prepend(value) adds a new node containing value to the start of the list
+  // prepend(value) adds a new node containing value to the
+  // start of the list
 
   prepend(value) {
     const newNode = new Node(value);
@@ -109,20 +111,117 @@ class LinkedList {
     }
     currentNode.nextNode = null;
   }
+
+  // contains(value) returns true if the passed in value is
+  // in the list and otherwise returns false.
+
+  contains(value) {
+    let currentNode = this.head;
+
+    while (currentNode !== null) {
+      if (currentNode.value === value) {
+        return true;
+      } else {
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return false;
+  }
+
+  // find(value) returns the index of the node containing value,
+  // or null if not found.
+
+  find(value) {
+    let currentNode = this.head;
+    let currentIndex = 0;
+
+    while (currentNode !== null) {
+      if (currentNode.value !== value) {
+        currentIndex++;
+        currentNode = currentNode.nextNode;
+      } else {
+        return currentIndex;
+      }
+    }
+    return null;
+  }
+
+  // toString represents your LinkedList objects as strings,
+  // so you can print them out and preview them in the console.
+  // The format should be: ( value ) -> ( value ) -> ( value ) -> null
+
+  toString() {
+    let currentNode = this.head;
+    let nodeString = "";
+
+    while (currentNode !== null) {
+      nodeString += `( ${currentNode.value} ) -> `;
+      currentNode = currentNode.nextNode;
+    }
+    nodeString += "null";
+    return nodeString;
+  }
+
+  // insertAt(value, index) that inserts a new node with the
+  // provided value at the given index.
+
+  insertAt(value, index) {
+    const newNode = new Node(value);
+    let currentNode = this.head;
+    let currentIndex = 0;
+
+    while (currentNode !== null && currentIndex < index - 1) {
+        currentIndex++;
+        currentNode = currentNode.nextNode;
+      }
+
+    newNode.nextNode = currentNode.nextNode;
+    currentNode.nextNode = newNode;
+  }
+
+  // removeAt(index) that removes the node at the given index.
+
+  removeAt(index) {
+    let currentNode = this.head;
+    let currentIndex = 0;
+
+    if (this.head === null) {
+      console.log("List is empty.");
+      return;
+    }
+
+    if (index === 0) {
+      this.head = this.head.nextNode;
+      return;
+    }
+
+    while (currentNode !== null && currentIndex < index - 1) {
+      currentIndex++;
+      currentNode = currentNode.nextNode;
+    }
+
+    if (currentNode === null || currentNode.nextNode === null) {
+      console.log("Index out of bounds.");
+      return;
+    }
+
+    currentNode.nextNode = currentNode.nextNode.nextNode;
+
+  }
+
 }
 
 const list = new LinkedList();
 
 list.append("dog");
 list.append("cat");
-list.pop();
-list.getHead();
-list.prepend("parrot");
-list.getHead();
+list.append("parrot");
 list.append("hamster");
 list.append("snake");
 list.append("turtle");
-list.size();
-list.getTail();
-list.at(4);
+list.insertAt("dragon", 3);
+list.removeAt(3);
+
+console.log(list.toString());
+
 
